@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Xyanz Project</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('https://tse2.mm.bing.net/th?id=OIP.4qkfeNhyFIj-mQ8Nk1rp-gHaEY&pid=Api') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      height: auto; /* Memperbaiki untuk scroll */
+      min-height: 100vh; /* Set minimal height untuk memastikan halaman tetap penuh pada tampilan kecil */
+      overflow-y: auto; /* Enable scroll pada sumbu Y */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* Konten tetap di atas */
+      padding-top: 50px; /* Memberikan jarak dari atas */
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      margin-bottom: 40px;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+      text-align: center; /* Menjaga agar judul di tengah */
+    }
+
+    .button-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 50px; /* Memberikan sedikit jarak di bawah */
+    }
+
+    .btn {
+      padding: 15px 30px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(45deg, #00f260, #0575e6);
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.5s ease;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.7);
+    }
+
+    .info-box {
+      margin-top: 30px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      max-width: 500px;
+      text-align: center;
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
+      position: relative;
+      width: 90%; /* Membuat info box responsif di layar kecil */
+      margin: 0 auto; /* Center info box */
+    }
+
+    .back-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: red;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 20px;
+      text-align: center;
+      box-shadow: 0 0 8px rgba(255, 0, 0, 0.8);
+      position: absolute;
+      top: -10px;
+      right: -10px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(100vh); }
+    }
+
+    /* Responsif untuk layar lebih kecil */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem; /* Menurunkan ukuran font untuk layar kecil */
+      }
+
+      .btn {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+      }
+
+      .info-box {
+        width: 95%; /* Lebar info box lebih kecil pada perangkat kecil */
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Xyanz Project</h1>
+
+  <div class="button-container">
+    <button class="btn" onclick="showInfo('tentang')">Tentang</button>
+    <button class="btn" onclick="showInfo('proyek')">Proyek</button>
+    <button class="btn" onclick="showInfo('kontak')">Kontak</button>
+  </div>
+
+  <div id="info" class="info-box"></div>
+
+  <script>
+    // Suara welcome message otomatis saat halaman dimuat
+    window.onload = () => {
+      const msg = new SpeechSynthesisUtterance("Welcome to Xyanz Project");
+      msg.lang = 'en-US';
+      msg.pitch = 1.2;
+      msg.rate = 0.9;
+      speechSynthesis.speak(msg);
+    };
+
+    function showInfo(type) {
+      const infoBox = document.getElementById('info');
+      let content = '';
+
+      switch(type) {
+        case 'tentang':
+          content = '<h3>Tentang Kami</h3><p>Xyanz Project adalah tim kreatif yang fokus pada pengembangan teknologi dan desain modern.</p>';
+          break;
+        case 'proyek':
+          content = `
+            <h3>Proyek Kami</h3>
+            <div style="margin-top: 10px;">
+              <button class='btn' onclick="showProject(1)">Proyek 1</button>
+              <button class='btn' onclick="showProject(2)">Proyek 2</button>
+              <button class='btn' onclick="showProject(3)">Proyek 3</button>
+            </div>
+          `;
+          break;
+        case 'kontak':
+          content = '<h3>Kontak</h3><p>Email: ryusatoru68@gmail.com</p>';
+          break;
+      }
+
+      content += '<button class="back-btn" onclick="hideInfo()">×</button>';
+      infoBox.style.display = 'block';
+      infoBox.innerHTML = content;
+    }
+
+    function showProject(num) {
+      const infoBox = document.getElementById('info');
+      const projects = {
+        1: {
+          img: 'https://cdn-icons-png.flaticon.com/512/4712/4712027.png',
+          desc: 'Proyek 1 adalah pengembangan WhatsApp Bot otomatis untuk membalas pesan, menggunakan AI dan respon cepat berbasis Node.js.'
+        },
+        2: {
+          img: 'https://images.unsplash.com/photo-1581090700227-1e8e1451b8d5?auto=format&fit=crop&w=800&q=80',
+          desc: 'Proyek 2 berisi kumpulan script bot untuk berbagai kebutuhan, termasuk auto-reply, command handler, dan pengelolaan pesan otomatis.'
+        },
+        3: {
+          img: 'https://cdn-icons-png.flaticon.com/512/1055/1055687.png',
+          desc: 'Proyek 3 menyediakan akses API publik dan private untuk integrasi layanan pihak ketiga seperti chatbot, notifikasi, dan webhook.'
+        }
+      };
+
+      const proj = projects[num];
+      infoBox.innerHTML = `<h3>Proyek ${num}</h3>
+        <img src="${proj.img}" alt="Proyek ${num}" style="width:100%; max-width:400px; border-radius:10px; margin-top:10px;">
+        <p style="margin-top: 10px;">${proj.desc}</p>
+        <button class="back-btn" onclick="showInfo('proyek')">×</button>`;
+    }
+
+    function hideInfo() {
+      document.getElementById('info').style.display = 'none';
+    }
+
+    // Efek salju
+    for (let i = 0; i < 50; i++) {
+      const snow = document.createElement('div');
+      snow.className = 'snowflake';
+      snow.textContent = '❄';
+      snow.style.left = Math.random() * window.innerWidth + 'px';
+      snow.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      snow.style.fontSize = (Math.random() * 10 + 10) + 'px';
+      document.body.appendChild(snow);
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
